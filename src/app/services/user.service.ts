@@ -12,47 +12,47 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-getUser(id: any){
-  return new Promise((accept, reject) => {
-    this.http.get(`${this.urlServer}/current_user/${id}`, this.httpHeaders).subscribe(
-      (data: any)=>{
-        accept(data);
-      },
-      (error) => {
-        console.log(error, 'error');
-        if (error.status == 500){
-          reject('Error Porfavor intenta mas tarde');
-        }else{
-          reject('Error al obtener el usuario');
+  getUser(id: any){
+    return new Promise((accept, reject) => {
+      this.http.get(`${this.urlServer}/current_user/${id}`, this.httpHeaders).subscribe(
+        (data: any)=>{
+          accept(data);
+        },
+        (error) => {
+          console.log(error, 'error');
+          if (error.status === 500){
+            reject('Error Porfavor intenta mas tarde');
+          } else {
+            reject('Error al obtener el usuario');
+          }
         }
-      }
-    )
-  });
-}
-
-updateUser(user: any){
-  const user_params = {
-    user: user
+      );
+    });
   }
-  return new Promise((accept, reject) => {
-    this.http.post(`${this.urlServer}/update/${user.id}`,user_params, this.httpHeaders).subscribe(
-      (data: any)=>{
-        accept(data); 
-      },
-      (error) => {
-        console.log(error, 'error');
-        if (error.status == 500){
-          reject('Error Porfavor intenta mas tarde');
-        }else{
-          reject('Error al obtener el usuario');
-        }
-      }
-    )
-  });
-}
-listUsers(page: number, perPage: number, query: string = ''){
-  const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&querry=${query}`;
-  return this.http.get(url).toPromise();
-}
 
+  updateUser(user: any){
+    const user_params = {
+      user: user
+    };
+    return new Promise((accept, reject) => {
+      this.http.post(`${this.urlServer}/update/${user.id}`, user_params, this.httpHeaders).subscribe(
+        (data: any)=>{
+          accept(data); 
+        },
+        (error) => {
+          console.log(error, 'error');
+          if (error.status === 500){
+            reject('Error Porfavor intenta mas tarde');
+          } else {
+            reject('Error al obtener el usuario');
+          }
+        }
+      );
+    });
+  }
+
+  listUsers(page: number, perPage: number, query: string = ''){
+    const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&query=${query}`;
+    return this.http.get(url).toPromise();
+  }
 }

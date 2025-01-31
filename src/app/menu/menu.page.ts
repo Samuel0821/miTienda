@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -19,15 +20,12 @@ export class MenuPage implements OnInit {
   ngOnInit() {
   }
 
-  closeMenu(){
-    // console.log("cerrando menu")
+  closeMenu() {
     this.menu.close();
   }
 
-  log_out(){
-    // console.log("Salir")
+  log_out() {
     this.storage.remove("isUserLoggedIn");
     this.navCtrl.navigateRoot("/login");
   }
-
 }

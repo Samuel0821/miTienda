@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-search-users',
@@ -15,18 +16,27 @@ export class SearchUsersPage implements OnInit {
   hasMoreUsers: boolean = true;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private storage: Storage,
+  
   ) { }
 
   ngOnInit() {
     this.loadUsers();
   }
-  
-  loadUsers(event?: any) {
+
+  async loadUsers(event?: any) {
+    const currentUser = await this.storage.get('user');
+    const followingUsers = Array.isArray(currentUser.following_users) ? currentUser.following_users : [];
+    
     this.userService.listUsers(this.page, this.limit, this.query).then(
       (data: any) => {
-        if (data.users && data.users.length > 0) {
-          this.users = [...this.users, ...data.users];
+        if (data.users.length > 0) {
+          const updatedUsers = data.users.map((user: any) => ({
+            ...user,
+            is_following: followingUsers.some((followedUser: any) => followedUser.id === user.id),
+          }));
+          this.users = [...this.users, ...updatedUsers];
           this.page++;
         } else {
           this.hasMoreUsers = false;
@@ -52,7 +62,20 @@ export class SearchUsersPage implements OnInit {
     this.hasMoreUsers = true;
     this.loadUsers();
   }
-  follow(user_id: any){
-    console.log('follow',user_id);
+
+  follow(user_id: any) {
+    console.log('follow', user_id);
+  }
+
+  unfollow(user_id: any) {
+    console.log('unfollow', user_id);
+  }
+
+  toggleFollow(user: any) {
+    if (user.is_following) {
+      this.unfollow(user.id);
+    } else {
+      this.follow(user.id);
+    }
   }
 }
