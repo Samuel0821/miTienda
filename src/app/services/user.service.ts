@@ -16,7 +16,7 @@ getUser(id: any){
   return new Promise((accept, reject) => {
     this.http.get(`${this.urlServer}/current_user/${id}`, this.httpHeaders).subscribe(
       (data: any)=>{
-        accept(data); // Pasamos los datos recibidos a la promesa
+        accept(data);
       },
       (error) => {
         console.log(error, 'error');
@@ -49,6 +49,10 @@ updateUser(user: any){
       }
     )
   });
+}
+listUsers(page: number, perPage: number, query: string = ''){
+  const url = `${this.urlServer}/list_users?page=${page}&per_page=${perPage}&querry=${query}`;
+  return this.http.get(url).toPromise();
 }
 
 }
