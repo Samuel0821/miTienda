@@ -3,6 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-title class="small-title">Mi cuenta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="edit-profile-button" (click)="openEditProfileModal()">Editar perfil</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +20,47 @@
   <p class="username">Usuario: {{user_data.username}}</p>
 
   <div class="stats-container">
-    <p class="followers">Seguidores: {{user_data.followed_users.length}}</p>
-    <p class="following">Siguiendo: {{user_data.following_users.length}}</p>
+    <p class="followers">Seguidores: {{user_data.followed_users?.length || 0}}</p>
+    <p class="following">Siguiendo: {{user_data.following_users?.length || 0}}</p>
   </div>
 </ion-content>
 
+<ion-modal [isOpen]="isEditProfileModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Editar Perfil</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeEditProfileModal()">Cancelar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <form [formGroup]="editProfileForm" (ngSubmit)="saveProfile()">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+        <ion-label *ngIf="editProfileForm.get('name')?.hasError('required') && editProfileForm.get('name')?.touched" color="danger">
+          Es obligatorio el nombre
+        </ion-label>
+        <ion-item>
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input formControlName="last_name"></ion-input>
+        </ion-item>
+        <ion-label *ngIf="editProfileForm.get('last_name')?.hasError('required') && editProfileForm.get('last_name')?.touched" color="danger">
+          Es obligatorio el apellido
+        </ion-label>
+        <ion-item lines="none">
+          <ion-label>Nueva foto</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-button (click)="presentActionSheet()">Seleccionar archivo</ion-button>
+        </ion-item>
+
+        <ion-button expand="full" type="submit" [disabled]="!editProfileForm.valid">Guardar</ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

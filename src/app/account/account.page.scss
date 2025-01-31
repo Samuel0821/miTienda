@@ -82,7 +82,22 @@ ion-content {
     font-size: 1.5rem;
     color: white;
   }
+  .small-title {
+    font-size: 1rem; 
+  }
   
+  .edit-profile-button {
+    font-size: 0.8rem;  
+    padding: 0.25rem 0.5rem; 
+    --background: #3a4f6c;  
+    --border-radius: 4px;
+    --color: white;
+    text-transform: none;  
+  }
+  
+  ion-label[color="danger"] {
+    color: red; 
+  }
   
   
   

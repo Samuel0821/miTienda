@@ -5,13 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-avatar>
-    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-  </ion-avatar>
+  <div class="center-avatar">
+    <ion-avatar>
+      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+  </div>
 
-  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)"> <!-- AGREGADO: (ngSubmit) PARA ENVIAR EL FORMULARIO -->
-
-    <!-- Campo de correo -->
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)"> 
     <ion-item>
       <ion-label position="floating">Correo</ion-label>
       <ion-input placeholder="ejemplo@email.com" formControlName="email"></ion-input>
@@ -24,7 +24,6 @@
       </ng-container>
     </div>
 
-    <!-- Campo de contraseña -->
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
@@ -37,18 +36,13 @@
       </ng-container>
     </div>
 
-    <!-- Botón de envío -->
-    <ion-button 
-    expand="full" 
-    type="submit" 
-    
-    >Iniciar sesión</ion-button>
+    <ion-button expand="full" type="submit">Iniciar sesión</ion-button>
   </form>
-  <!-- Agregar botón o link para redirigir al registro -->
+  
   <ion-button expand="full" color="secondary" [routerLink]="['/register']">
     Ir a Registro
   </ion-button>
- <p>{{errorMessage}}</p>
+  <p>{{errorMessage}}</p>
 </ion-content>
 
 <!-- En la etiqueta del boton linea 44 elimino este atributo [disabled]="loginForm.invalid" 

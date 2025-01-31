@@ -1,35 +1,24 @@
 ion-content {
-  --background: linear-gradient(135deg, #ffffff, #ffffff); /* Fondo con gradiente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  --background: linear-gradient(135deg, #ffffff, #ffffff); 
   padding: 20px;
   height: 100%;
 }
 
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
-  text-align: center; /* Centrar el texto dentro del contenedor */
-}
-
-ion-avatar {
+.center-avatar {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%; 
 }
 
 ion-avatar img {
-  width: 50px; /* Tamaño más pequeño para el avatar */
+  width: 50px; 
   height: 50px;
-  border-radius: 50%; /* Mantiene la forma circular */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+  border-radius: 50%; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
 }
+
 
 ion-item {
   width: 100%;
@@ -40,45 +29,45 @@ ion-item {
 ion-label {
   font-weight: bold;
   font-size: 16px;
-  color: #ffffff; /* Color blanco para las etiquetas */
-  margin-bottom: 8px; /* Para separar el label del campo de entrada */
+  color: #ffffff; 
+  margin-bottom: 8px; 
 }
 
 ion-input {
-  --border-color: #0c0c0c; /* Color del borde del input */
-  --placeholder-color: #aaaaaa; /* Cambié el color del placeholder a gris */
-  color: #333333; /* Cambié el color del texto de los inputs a un gris oscuro */
+  --border-color: #0c0c0c; 
+  --placeholder-color: #aaaaaa; 
+  color: #333333; 
   font-size: 16px;
-  padding: 15px 10px; /* Ajustamos el padding para dar más espacio alrededor del texto */
-  background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido para los campos */
+  padding: 15px 10px; 
+  background-color: rgba(255, 255, 255, 0.2); 
   border-radius: 8px;
-  border: 2px solid #000000; /* Borde negro para los campos de input */
-  width: 100%; /* Aseguramos que ocupe todo el ancho disponible */
+  border: 2px solid #000000; 
+  width: 100%; 
   position: relative;
 }
 
 ion-input:focus {
-  border-color: #000000; /* Borde negro cuando el campo está en foco (focus) */
+  border-color: #000000; 
 }
 
 ion-button {
-  background-color: #ff6f61; /* Color de fondo del botón */
+  background-color: #ff6f61; 
   color: white;
   font-size: 16px;
   padding: 12px;
   border-radius: 8px;
   margin-top: 20px;
-  width: 100%; /* Hace que el botón ocupe todo el ancho del formulario */
+  width: 100%; 
 }
 
 ion-button:disabled {
-  background-color: #cccccc; /* Color del botón cuando está deshabilitado */
+  background-color: #cccccc; 
 }
 
 ion-label[color='danger'] {
   font-size: 14px;
   font-weight: normal;
-  color: #ff4747; /* Rojo para los mensajes de error */
+  color: #ff4747; 
 }
 
 h1 {
@@ -89,13 +78,3 @@ h1 {
   text-align: center;
   width: 100%;
 }
-
-  
-  
-
-  
-  
-  
-  
-  
-  
