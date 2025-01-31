@@ -11,6 +11,8 @@ import { AddPostModalPage } from '../add-post-modal/add-post-modal.page';
 })
 export class HomePage {
   posts: any[] = [];  
+  currentPage: number = 1;
+  loading: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -22,14 +24,43 @@ export class HomePage {
     this.loadPosts(); 
   }
 
-  
-  loadPosts() {
-    this.postService.getPosts().then((data: any) => {
+  loadPosts(event?: any) {
+    if (this.loading) return;
+
+    this.loading = true;
+    const loadingMessage = document.getElementById('loading-message');
+    if (loadingMessage) {
+      loadingMessage.style.display = 'block';
+    }
+
+    this.postService.getPosts(this.currentPage, 10).then((data: any) => {
       console.log(data);  
-      this.posts = data;  
+      this.posts = [...this.posts, ...data];
+      this.currentPage++;
+      this.loading = false;
+      if (loadingMessage) {
+        loadingMessage.style.display = 'none';
+      }
+      if (event) {
+        event.target.complete();
+      }
     }).catch((error) => {
       console.log(error);
+      this.loading = false;
+      if (loadingMessage) {
+        loadingMessage.style.display = 'none';
+      }
     });
+  }
+
+  loadData(event: any) {
+    const scrollTop = event.detail.scrollTop;
+    const offsetHeight = event.target.scrollHeight;
+    const clientHeight = event.target.clientHeight;
+
+    if (scrollTop + clientHeight >= offsetHeight - 1) {
+      this.loadPosts(event);
+    }
   }
 
   async addPost() {
@@ -39,10 +70,8 @@ export class HomePage {
       componentProps: {}
     });
 
-    
     modal.onDidDismiss().then((result) => {
       if (result.data && result.data.post) {
-        
         this.posts.unshift(result.data.post);  
       }
     });
