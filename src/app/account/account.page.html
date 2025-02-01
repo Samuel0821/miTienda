@@ -12,7 +12,7 @@
 
 <ion-content class="center-content">
   <div class="avatar-container">
-    <ion-avatar (click)="takePhoto()">
+    <ion-avatar (click)="presentImageOptions()">
       <img [src]="user_data.image" />
     </ion-avatar>
     <h1>{{user_data.name}} {{user_data.last_name}}</h1>
@@ -21,7 +21,7 @@
 
   <div class="stats-container">
     <p class="followers">Seguidores: {{user_data.followed_users?.length || 0}}</p>
-    <p class="following">Siguiendo: {{user_data.following_users?.length || 0}}</p>
+    <p class="following">Siguiendo: {{user_data.following_users_count || 0}}</p>
   </div>
 </ion-content>
 

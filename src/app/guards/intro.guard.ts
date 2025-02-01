@@ -13,7 +13,7 @@ export class IntroGuard implements CanActivate{
     if (isUserLoggedIn){
       return true;
     }else {
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/intro');
       return false;
     }
   }

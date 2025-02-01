@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, AlertController } from '@ionic/angular';
 
 defineCustomElements(window);
 
@@ -20,7 +20,8 @@ export class AccountPage implements OnInit {
     email: '',
     image: '',
     followed_users: [],
-    following_users: []
+    following_users: [],
+    following_users_count: 0 // Inicializar el contador
   };
   isEditProfileModalOpen = false;
   editProfileForm: FormGroup;
@@ -30,7 +31,8 @@ export class AccountPage implements OnInit {
     private storage: Storage,
     private formBuilder: FormBuilder,
     private modalController: ModalController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController
   ) {
     this.editProfileForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -47,6 +49,10 @@ export class AccountPage implements OnInit {
         console.log(data);
         this.storage.set('user', data);
         this.user_data = data;
+        // Asegurarse de que `following_users` esté definido antes de leer su longitud
+        this.user_data.following_users = this.user_data.following_users || [];
+        // Actualizar el contador de usuarios seguidos
+        this.user_data.following_users_count = this.user_data.following_users.length;
       }
     ).catch(
       (error) => {
@@ -64,6 +70,48 @@ export class AccountPage implements OnInit {
     console.log(capturedPhoto.dataUrl);
     this.user_data.image = capturedPhoto.dataUrl;
     this.update();
+  }
+
+  async selectImageFromGallery() {
+    const galleryPhoto = await Camera.getPhoto({
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos,
+      quality: 100
+    });
+    console.log(galleryPhoto.dataUrl);
+    this.user_data.image = galleryPhoto.dataUrl;
+    this.update();
+  }
+
+  async presentImageOptions() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Seleccionar fuente',
+      buttons: [
+        {
+          text: 'Cámara',
+          icon: 'camera',
+          handler: () => {
+            this.takePhoto();
+          }
+        },
+        {
+          text: 'Galería',
+          icon: 'images',
+          handler: () => {
+            this.selectImageFromGallery();
+          }
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancelado');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 
   async update() {

@@ -9,12 +9,13 @@
 
 <ion-content (ionScroll)="loadData($event)" [scrollEvents]="true">
   <ion-list>
+    <ion-spinner  *ngIf="loading"></ion-spinner>
     <ion-card *ngFor="let post of posts">
       <img [src]="post.image" class="image-post" />
       <ion-card-header>
         <ion-card-subtitle>
           <ion-avatar class="user-avatar">
-            <img [src]="post.user.image ? post.user.image : 'assets/images/default-avatar.jpeg'" />
+            <img [src]="post.user.image ? post.user.image : 'assets/images/default-avatar.png'" />
           </ion-avatar>
           {{post.user.name}}
         </ion-card-subtitle>

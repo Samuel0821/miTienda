@@ -13,6 +13,7 @@ export class HomePage {
   posts: any[] = [];  
   currentPage: number = 1;
   loading: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private postService: PostService,
@@ -22,11 +23,17 @@ export class HomePage {
   ngOnInit() {
     console.log('Home Page');
     this.loadPosts(); 
+    this.loadPosts();
+    this.postService.postCreated.subscribe((newPost: any)=>{
+      this.posts.unshift(newPost);
+    })
   }
 
   loadPosts(event?: any) {
+    console.log('Load Post');
+    this.isLoading = true;
+    
     if (this.loading) return;
-
     this.loading = true;
     const loadingMessage = document.getElementById('loading-message');
     if (loadingMessage) {
